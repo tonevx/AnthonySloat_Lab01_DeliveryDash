@@ -4,8 +4,8 @@ using UnityEngine.InputSystem.Layouts;
 
 public class PlayerMove : MonoBehaviour
 {
-    float steerSpeed = 0.5f;
-    float moveSpeed = .05f;
+    [SerializeField] float steerSpeed = 0.89f;
+    [SerializeField] float moveSpeed = 0.2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
