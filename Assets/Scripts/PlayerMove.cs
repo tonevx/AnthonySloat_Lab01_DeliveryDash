@@ -5,8 +5,8 @@ using UnityEngine.InputSystem.Layouts;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] float steerSpeed = 0.89f;
-    [SerializeField] float moveSpeed = 0.2f;
+    [SerializeField] float steerSpeed = 1.5f;
+    [SerializeField] float moveSpeed = 0.05f;
     void Start()
     {
         
@@ -15,25 +15,28 @@ public class PlayerMove : MonoBehaviour
     
     void Update()
     {
+        float steer = 0f;
+        float move = 0f;
+
         if(Keyboard.current.wKey.isPressed)
         {
-            Debug.Log("Pressing the W Key");
+            move = 1f;
         }
         else if(Keyboard.current.sKey.isPressed)
         {
-            Debug.Log("Pressing the S Key");
+            move = -1f;
         }
         if(Keyboard.current.aKey.isPressed)
         {
-            Debug.Log("Pressing the A Key");
+            steer = 1f;
         }
         else if(Keyboard.current.dKey.isPressed)
         {
-            Debug.Log("Pressing the D Key");
+            steer = -1f;
         }
 
 
-        transform.Rotate(0,0,steerSpeed);
-        transform.Translate(0, moveSpeed, 0);
+        transform.Rotate(0,0,steer * steerSpeed);
+        transform.Translate(0, move * moveSpeed, 0);
     }
 }
