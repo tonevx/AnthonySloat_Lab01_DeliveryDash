@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Collisions : MonoBehaviour
 {
-    float coinCounter = 0;
+    float coinCounter = 1;
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collision has occurred against the " + collision.gameObject.name + "!");
