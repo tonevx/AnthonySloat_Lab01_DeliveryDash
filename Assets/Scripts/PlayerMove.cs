@@ -5,8 +5,8 @@ using UnityEngine.InputSystem.Layouts;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] float steerSpeed = 1.5f;
-    [SerializeField] float moveSpeed = 0.05f;
+    [SerializeField] float steerSpeed = 200f;
+    [SerializeField] float moveSpeed = 10f;
     void Start()
     {
         
@@ -35,8 +35,10 @@ public class PlayerMove : MonoBehaviour
             steer = -1f;
         }
 
+        float moveAmount = move * moveSpeed * Time.deltaTime;
+        float steerAmount = steer * steerSpeed * Time.deltaTime;
 
-        transform.Rotate(0,0,steer * steerSpeed);
-        transform.Translate(0, move * moveSpeed, 0);
+        transform.Rotate(0,0, steerAmount);
+        transform.Translate(0, moveAmount, 0);
     }
 }
