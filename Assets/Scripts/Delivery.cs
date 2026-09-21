@@ -5,6 +5,7 @@ public class Delivery : MonoBehaviour
 {
     float coinCounter = 1;
     bool hasPackage = false;
+    [SerializeField] float delay = 1f;
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -27,7 +28,7 @@ public class Delivery : MonoBehaviour
             }
             hasPackage = true;
             Debug.Log("Obtained Package!");
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject, delay);
         }
         if (collision.CompareTag("Customer") && hasPackage)
         {
