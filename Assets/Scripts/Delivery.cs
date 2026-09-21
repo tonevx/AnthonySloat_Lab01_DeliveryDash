@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 public class Delivery : MonoBehaviour
@@ -28,18 +29,15 @@ public class Delivery : MonoBehaviour
             Debug.Log("Obtained Package!");
             Destroy(collision.gameObject);
         }
-        if (collision.CompareTag("Customer"))
+        if (collision.CompareTag("Customer") && hasPackage)
         {
             if (hasPackage == false)
             {
                 Debug.Log("You don't have a package!");
             }
-            else
-            {
-                hasPackage = false;
-                Destroy(collision.gameObject);
-                Debug.Log("Package delivered!");
-            }
+            hasPackage = false;
+            Destroy(collision.gameObject);
+            Debug.Log("Package delivered!");
         }
     }
 }
