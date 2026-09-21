@@ -19,15 +19,11 @@ public class Delivery : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Package"))
+        if (collision.CompareTag("Package") && !hasPackage)
         {
-            if (hasPackage)
-            {
-                Debug.Log("You already have a package!!");
-                return;
-            }
             hasPackage = true;
             Debug.Log("Obtained Package!");
+            GetComponent<ParticleSystem>().Play();
             Destroy(collision.gameObject, delay);
         }
         if (collision.CompareTag("Customer") && hasPackage)
@@ -39,6 +35,8 @@ public class Delivery : MonoBehaviour
             hasPackage = false;
             Destroy(collision.gameObject);
             Debug.Log("Package delivered!");
+            GetComponent<ParticleSystem>().Stop();
+
         }
     }
 }
