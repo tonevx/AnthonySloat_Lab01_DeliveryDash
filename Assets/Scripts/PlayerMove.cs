@@ -2,6 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Layouts;
+using TMPro;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -10,9 +11,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float boostSpeed = 15f;
     [SerializeField] float baseSpeed = 10f;
 
+    [SerializeField] TMP_Text boostText;
+
     void Start()
     {
-        
+        boostText.gameObject.SetActive(false);   
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -20,12 +23,17 @@ public class PlayerMove : MonoBehaviour
         if(collision.CompareTag("Booster"))
         {
             currentSpeed = boostSpeed;
+            boostText.gameObject.SetActive(true);
             Destroy(collision.gameObject);
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        currentSpeed = baseSpeed;
+        if(collision.collider.CompareTag("WorldColliders"))
+        {
+            currentSpeed = baseSpeed;
+            boostText.gameObject.SetActive(false);   
+        }
     }
 
     void Update()
