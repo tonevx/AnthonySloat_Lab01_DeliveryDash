@@ -12,7 +12,6 @@ public class Delivery : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip pickupSound;
     [SerializeField] AudioClip deliverySound;
-    [SerializeField] AudioClip victorySound;
     [SerializeField] int packagesToWin = 4;
 
     void Start()
@@ -43,10 +42,6 @@ public class Delivery : MonoBehaviour
             packagesDelivered += 1;
             UpdateScoreDisplay();
             audioSource.PlayOneShot(deliverySound);
-            if (packagesDelivered >= packagesToWin)
-            {
-                audioSource.PlayOneShot(victorySound);
-            };
         }
     }
         void UpdateScoreDisplay()
