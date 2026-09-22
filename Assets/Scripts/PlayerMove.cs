@@ -11,6 +11,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float boostSpeed = 15f;
     [SerializeField] float baseSpeed = 10f;
 
+    [SerializeField] AudioClip boostSound;
+    [SerializeField] AudioClip bumpSound;
+    [SerializeField] AudioSource audioSource;
+
+
     [SerializeField] TMP_Text boostText;
 
     void Start()
@@ -25,6 +30,7 @@ public class PlayerMove : MonoBehaviour
             currentSpeed = boostSpeed;
             boostText.gameObject.SetActive(true);
             Destroy(collision.gameObject);
+            audioSource.PlayOneShot(boostSound);
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
@@ -33,6 +39,8 @@ public class PlayerMove : MonoBehaviour
         {
             currentSpeed = baseSpeed;
             boostText.gameObject.SetActive(false);   
+            audioSource.PlayOneShot(bumpSound);
+
         }
     }
 

@@ -1,22 +1,24 @@
 using NUnit.Framework;
 using UnityEngine;
+using TMPro;
 
 public class Delivery : MonoBehaviour
 {
-    float coinCounter = 1;
     bool hasPackage = false;
+    int packagesDelivered = 0;
     [SerializeField] float delay = 1f;
+    [SerializeField] TMP_Text scoreText;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip pickupSound;
+    [SerializeField] AudioClip deliverySound;
+    [SerializeField] AudioClip victorySound;
+    [SerializeField] int packagesToWin = 4;
+
+    void Start()
     {
-        if (collision.collider.CompareTag("Coin"))
-        {
-            Destroy(collision.gameObject);
-            Debug.Log($"You collected a test Coin! It's... honestly kind of worthless. You now have {coinCounter} coins!");
-            coinCounter += 1;
-        }
+        UpdateScoreDisplay();
     }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Package") && !hasPackage)
@@ -25,6 +27,8 @@ public class Delivery : MonoBehaviour
             Debug.Log("Obtained Package!");
             GetComponent<ParticleSystem>().Play();
             Destroy(collision.gameObject, delay);
+            audioSource.PlayOneShot(pickupSound);
+
         }
         if (collision.CompareTag("Customer") && hasPackage)
         {
@@ -36,7 +40,17 @@ public class Delivery : MonoBehaviour
             Destroy(collision.gameObject);
             Debug.Log("Package delivered!");
             GetComponent<ParticleSystem>().Stop();
-
+            packagesDelivered += 1;
+            UpdateScoreDisplay();
+            audioSource.PlayOneShot(deliverySound);
+            if (packagesDelivered >= packagesToWin)
+            {
+                audioSource.PlayOneShot(victorySound);
+            };
         }
+    }
+        void UpdateScoreDisplay()
+    {
+        scoreText.text = $"Packages Delivered: {packagesDelivered}";
     }
 }
