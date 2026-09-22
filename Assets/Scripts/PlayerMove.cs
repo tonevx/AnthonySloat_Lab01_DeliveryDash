@@ -6,13 +6,28 @@ using UnityEngine.InputSystem.Layouts;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] float steerSpeed = 200f;
-    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float currentSpeed = 10f;
+    [SerializeField] float boostSpeed = 15f;
+    [SerializeField] float baseSpeed = 10f;
+
     void Start()
     {
         
     }
 
-    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Booster"))
+        {
+            currentSpeed = boostSpeed;
+            Destroy(collision.gameObject);
+        }
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        currentSpeed = baseSpeed;
+    }
+
     void Update()
     {
         float steer = 0f;
@@ -35,7 +50,7 @@ public class PlayerMove : MonoBehaviour
             steer = -1f;
         }
 
-        float moveAmount = move * moveSpeed * Time.deltaTime;
+        float moveAmount = move * currentSpeed * Time.deltaTime;
         float steerAmount = steer * steerSpeed * Time.deltaTime;
 
         transform.Rotate(0,0, steerAmount);
